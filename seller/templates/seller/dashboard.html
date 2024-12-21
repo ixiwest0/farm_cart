@@ -36,6 +36,21 @@
 </div>
 
 <script>
-    
+    const sellerId = {{ request.user.id }};
+    const socket = new WebSocket(`ws://${window.location.host}/ws/seller/${sellerId}/`);
+
+    socket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        if (data.type === 'order_update') {
+            const orderDiv = document.getElementById('real-time-orders');
+            const newOrder = document.createElement('p');
+            newOrder.textContent = data.message;
+            orderDiv.prepend(newOrder); // 새로운 주문을 상단에 추가
+        }
+    };
+
+    socket.onclose = function(event) {
+        console.log('WebSocket closed');
+    };
 </script>
 {% endblock %}
