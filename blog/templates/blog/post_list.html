@@ -1,0 +1,45 @@
+<style>
+    /* 상단 여백 추가 */
+    .main-content {
+        margin-top: 20px; /* 원하는 여백 크기로 조정 */
+    }
+
+    /* 카드 제목 스타일 */
+    .card-title {
+        font-size: 1.2rem; /* 제목 글씨 크기 */
+        font-weight: bold; /* 글씨 두께 */
+    }
+
+    /* 카드 텍스트 스타일 */
+    .card-text {
+        font-size: 0.9rem; /* 설명 글씨 크기 */
+        color: #555; /* 더 부드러운 텍스트 색상 */
+    }
+</style>
+
+{% extends 'blog/base.html' %}
+
+{% block main_area %}
+
+<div class="container main-content">
+    <div class="row">
+        <!-- 상품 리스트 -->
+        {% for p in post_list %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4" id="post-{{ p.pk }}">
+            <!-- 카드 전체를 클릭 가능하게 -->
+            <a href="{{ p.get_absolute_url }}" class="card h-100 text-decoration-none text-dark">
+                {% if p.head_image %}
+                    <img class="card-img-top" src="{{ p.head_image.url }}" alt="{{ p }} head image">
+                {% else %}
+                    <img class="card-img-top" src="https://picsum.photos/seed/{{ p.id }}/300/200" alt="random_image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ p.title }}</h5>
+                    <p class="card-text">{{ p.hook_text }}</p>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

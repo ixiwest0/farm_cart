@@ -1,0 +1,55 @@
+{% extends 'blog/base.html' %}
+
+{% block head_title %}
+<h5>{{ post.title }}</h5>
+{% endblock %}
+
+{% block main_area %}
+<div class="blog-header">
+    <h1>{{ post.title }}</h1>
+
+    <hr>
+
+
+    {% if post.head_image %}
+        <img class="card-img-top" src="{{ post.head_image.url }}" alt="{{ post.title }} head_image">
+    {% else %}
+        <img class="img-fluid rounded" src="http://picsum.photo/seed/{{ post.id }}/800/200" alt="random_image">
+    {% endif %}
+    <div id="post-area">
+        {% if post.category %}
+            <p><a href="/category/{{ post.category }}" class="badge badge-secondary float-right">{{ post.category }}</a></p>
+        {% else %}
+            <p><a href="/category/no_category" class="badge badge-secondary float-right">미분류</a></p>
+        {% endif %}
+    </div>
+</div>>
+
+<div class="blog-content">
+    {{ post.content|linebreaks }}
+</div>
+
+
+<!--파일 업로드 코드-->
+{% if post.file_upload %}
+    <a href="{{ post.file_upload.url }}" class="btn btn-outline-dark" role="button">
+        Download:
+
+<!--첨부파일 다운로드 버튼-->
+
+{% if post.get_file_ext == 'csv' %}
+<i class="fas fa-file-csv"></i>
+{% elif post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls' %}
+<i class="fas fa-file-excel"></i>
+{% elif post.get_file_ext == 'docx' or post.get_file_ext == 'doc' %}
+<i class="fas fa-file-word"></i>
+{% else %}
+<i class="far fa-file"></i>
+{% endif %}
+{{ post.get_file_name }}
+</a>
+{% endif %}
+
+
+
+{% endblock %}
