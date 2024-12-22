@@ -1,0 +1,49 @@
+{% extends 'cart/base.html' %}
+{% load humanize %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+<div class="container main-content">
+    <h1>결제 페이지</h1>
+    <p>-</p>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>상품</th>
+                <th>수량</th>
+                <th>가격</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cart_item in cart_items %}
+            <tr>
+                <td>{{ cart_item.product.title }}</td>
+                <td>{{ cart_item.quantity }}</td>
+                <td>{{ cart_item.sub_total|intcomma }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">총 삼품 금액</td>
+                <td>{{ total|intcomma }}</td>
+            </tr>
+            <tr>
+                <td colspan="2">배송비</td>
+                <td>무료</td> <!-- 배송비 무료 표시 -->
+            </tr>
+            <tr>
+                <td colspan="2"><strong>Total</strong></td>
+                <td><strong>{{ grand_total|intcomma }}</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+    <br>
+    <a href="/" class="btn btn-secondary">Cancel</a><br>
+    <br>
+    <button class="btn btn-primary">Proceed to Payment</button>
+</div>
+{% endblock %}

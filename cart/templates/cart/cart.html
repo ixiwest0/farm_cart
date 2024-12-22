@@ -1,0 +1,131 @@
+{% load static %}
+{% load humanize %}
+{% block metadescription %}
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+<div class="container main-content">
+    {% if not cart_items %}
+        <div class="text-center">
+            <h1>장바구니가 비었습니다.</h1>
+            <p><a href="/">계속 쇼핑하기</a></p>
+        </div>
+    {% else %}
+        <div class="row justify-content-center">
+            <!-- Left Section: Your items -->
+            <div class="col-md-8">
+                <br>
+                <h2 class="text-center">장바구니</h2>
+                <br>
+                <table class="table my_custom_table text-center">
+                    <thead class="my_custom_thread">
+                        <tr>
+                            <th>상품</th>
+                            <th>세부 내역</th>
+                            <th>총 가격</th>
+                            <th>옵션 변경</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cart_item in cart_items %}
+                        <tr>
+                            <td>
+                                <img src="{{ cart_item.product.head_image.url }}" class="img-thumbnail custom_image">
+                            </td>
+                            <td>
+                                {{ cart_item.product.title }}
+                                <br>
+                                상품 금액: {{ cart_item.product.price|intcomma }}<br>
+                                상품 수량: {{ cart_item.quantity }} x {{ cart_item.product.price|intcomma }}
+                            </td>
+                            <td>
+                                {{ cart_item.sub_total|intcomma }}
+                            </td>
+                            <td>
+                                <br>
+                                <a href="{% url 'cart:remove_cart' cart_item.product.id %}" class="custom_icon">-</a>
+                                {{ cart_item.quantity }}
+                                <a href="{% url 'cart:add_cart' cart_item.product.id %}" class="custom_icon">+</a><br>
+                                <a href="{% url 'cart:delete_cart' cart_item.product.id %}" class="custom_icon">상품 삭제</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- Right Section: Checkout -->
+            <br>
+            <div class="col-md-4">
+<!--                <h3 class="text-center">결제</h3>-->
+<!--                <p class="text-center">Please review your shopping cart items before proceeding with the order payment.</p>-->
+<!--                <br>-->
+                <table class="table text-center">
+<!--                    <tr>-->
+<!--                        <td>Total Items:</td>-->
+<!--                        <td>{{ counter }}</td>-->
+<!--                    </tr>-->
+                    <tr>
+                        <td>배송비 무료</td>
+                    </tr>
+                    <tr>
+                        <td>총 금액: {{total|intcomma}}</td>
+                    </tr>
+
+                </table>
+                <br>
+                <a href="/" class="btn btn-secondary btn-block">계속 쇼핑하기</a>
+                <br>
+                <a href="/cart/checkout/" class="btn btn-secondary">구매하기</a>
+            </div>
+        </div>
+    {% endif %}
+<br>
+<hr>
+<br>
+    {% include 'blog/footer.html' %}
+
+</div>
+{% endblock %}
+
+
+
+<style>
+    .my_custom_table {
+        width: 100%;
+        font-size: 20px;
+        margin: auto; /* 중앙 정렬 */
+    }
+
+    .my_custom_thread {
+        font-weight: bold;
+        text-transform: uppercase;
+        background-color: #f8f9fa;
+    }
+
+    .custom_image {
+        width: 200px;
+        height: 200px;
+    }
+
+    .custom_icon {
+        margin: 0 5px;
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .custom_icon:hover {
+        color: #0056b3;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .btn-block {
+        display: block;
+        width: 100%;
+    }
+</style>
