@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta ame="description" content="{% block metadescription %}{% endblock %}">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'blog/bootstrap/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/fontawesome.min.css' %}">
+</head>
+<body>
+  <div>
+
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+</html>
