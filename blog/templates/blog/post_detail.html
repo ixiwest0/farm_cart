@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load humanize %}
 
 {% block head_title %}
 <h5>{{ post.title }}</h5>
@@ -7,26 +8,24 @@
 {% block main_area %}
 <div class="blog-header">
     <h1>{{ post.title }}</h1>
-
-    <hr>
-
-
-    {% if post.head_image %}
-        <img class="card-img-top" src="{{ post.head_image.url }}" alt="{{ post.title }} head_image">
-    {% else %}
-        <img class="img-fluid rounded" src="http://picsum.photo/seed/{{ post.id }}/800/200" alt="random_image">
-    {% endif %}
+    <br>
+    <img class="card-img-top" src="{{ post.head_image.url }}" alt="{{ post.title }} head_image">
     <div id="post-area">
-        {% if post.category %}
-            <p><a href="/category/{{ post.category }}" class="badge badge-secondary float-right">{{ post.category }}</a></p>
-        {% else %}
-            <p><a href="/category/no_category" class="badge badge-secondary float-right">미분류</a></p>
-        {% endif %}
+        <p><a href="/category/{{ post.category }}" class="badge badge-secondary float-right">{{ post.category }}</a></p>
+        <h4 class="card-title">{{ post.price|intcomma }}</h4>
+
     </div>
 </div>>
 
 <div class="blog-content">
-    {{ post.content|linebreaks }}
+            {{ post.content|linebreaks }}
+    {% if post.stock <= 0 %}
+        <p><b>Out of Stock</b></p>
+    {% else %}
+        <a class="btn btn-secondary" href="{{ add_cart_url }}">Add to Cart</a>
+    {% endif %}
+
+
 </div>
 
 
@@ -49,7 +48,6 @@
 {{ post.get_file_name }}
 </a>
 {% endif %}
-
 
 
 {% endblock %}
