@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Request</title>
+</head>
+<body>
+    <h1>결제 요청</h1>
+    <form action="{% url 'kakao_pay_request' %}" method="post">
+        {% csrf_token %}
+        <label for="amount">결제 금액:</label>
+        <input type="number" id="amount" name="amount" required>
+        <button type="submit">카카오페이로 결제</button>
+    </form>
+</body>
+</html>
