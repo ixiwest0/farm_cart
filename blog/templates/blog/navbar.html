@@ -1,37 +1,5 @@
 {% load socialaccount %}
 
-<style>
-  /* 초록빛 청록색 배경과 검정 텍스트 */
-  .navbar-green-turquoise {
-    background-color: #32c8a4; /* 초록빛 청록색 */
-    color: #000000; /* 검정 텍스트 */
-  }
-
-  /* 링크 스타일 */
-  .navbar-green-turquoise .nav-link {
-    color: #000000; /* 기본 검정 */
-    transition: color 0.3s ease; /* 부드러운 호버 효과 */
-  }
-
-  /* 링크 호버 효과 */
-  .navbar-green-turquoise .nav-link:hover {
-    color: #ffffff; /* 흰색으로 변경 */
-  }
-
-  /* 브랜드 텍스트 */
-  .navbar-green-turquoise .navbar-brand {
-    color: #000000;
-  }
-
-  /* 브랜드 호버 효과 */
-  .navbar-green-turquoise .navbar-brand:hover {
-    color: #ffffff;
-  }
-</style>
-
-<!--새것-->
-{% load socialaccount %}
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <button
@@ -46,26 +14,28 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="{% url 'post_list' %}">팜 CART</a>
-
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'tag_page' 'all' %}">All</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'tag_page' 'best' %}">Best</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'category_page' 'seeds' %}">Seeds</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'category_page' 'fertilizer' %}">Fertilizers</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'category_page' 'programming' %}">Programming</a>
-          </li>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown {% if 'blog' in request.path %}active{% endif %}">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanede="false">
+                    Shop
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'tag_page' 'all' %}">All Products</a>
+                    <a class="dropdown-item" href="{% url 'category_page' 'seeds' %}">Seeds</a>
+                    <a class="dropdown-item" href="{% url 'category_page' 'fertilizer' %}">Fertilizer</a>
+                    <a class="dropdown-item" href="{% url 'category_page' 'programming' %}">Programming</a>
+                </div>
+            </li>
+            <li class="nav-item">
+             <a class="nav-link" href="/cart/">Your Cart()</a>
+<!--             <a class="nav-link" href="/cart/"><i class="fa-solid fa-cart-shopping"></i></a>-->
+            </li>
         </ul>
-        
+    </div>
+
+
+
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item dropdown">
@@ -87,8 +57,6 @@
                         <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Log In</a>
                     </li>
                 {% endif %}
-                <li class="nav-item">
-                  <a class="nav-link" href="/cart.html">Cart</a>
             </ul>
         </div>
     </div>
@@ -122,4 +90,3 @@
         </div>
     </div>
 </div>
-
