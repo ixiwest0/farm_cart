@@ -1,6 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from .models import Post, Category, Tag
+from django.urls import reverse
+
+# def allProdCat(request, c_slug=None):
+#     c_page = None;
+#     products = None;
+#     if c_slug != None:
+#         c_page = get_object_or_404(Category, slug=c_slug)
+#         products = Post.objects.filter(category=c_page, available=True)
+#     else:
+#         products = Post.objects.all().filter(available=True)
+#     return render(request, 'blog/post_list.html',{'category':c_page, 'products':products})
+
+
 
 
 class PostList(ListView):
@@ -57,5 +70,5 @@ class PostDetail(DetailView):
         context = super(PostDetail, self).get_context_data()
         context['categories'] = Category.objects.all()
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
+        context['add_cart_url'] = reverse('cart:add_cart', args=[self.object.id])
         return context
-
