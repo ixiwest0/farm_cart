@@ -1,131 +1,132 @@
+{% extends 'cart/base.html' %}
+
 {% load static %}
 {% load humanize %}
-{% block metadescription %}
-{% endblock %}
-
-{% block title %}
-{% endblock %}
 
 {% block content %}
-<div class="container main-content">
+<div class="container main-content mt-5">
     {% if not cart_items %}
         <div class="text-center">
-            <h1>장바구니가 비었습니다.</h1>
-            <p><a href="/">계속 쇼핑하기</a></p>
+            <h1 class="mb-4">장바구니가 비었습니다.</h1>
+            <p><a href="/" class="btn btn-primary">계속 쇼핑하기</a></p>
         </div>
     {% else %}
-        <div class="row justify-content-center">
+        <div class="row">
             <!-- Left Section: Your items -->
             <div class="col-md-8">
-                <br>
-                <h2 class="text-center">장바구니</h2>
-                <br>
-                <table class="table my_custom_table text-center">
-                    <thead class="my_custom_thread">
-                        <tr>
-                            <th>상품</th>
-                            <th>세부 내역</th>
-                            <th>총 가격</th>
-                            <th>옵션 변경</th>
-                        </tr>
+                <h2 class="text-center mb-4">장바구니</h2>
+                <table class="table table-bordered align-middle">
+                    <thead class="table-light">
+                            <tr>
+                                <th style="width: 20%;">상품</th>
+                                <th style="width: 40%;">세부 내역</th>
+                                <th style="width: 20%;">총 가격</th>
+                                <th style="width: 20%;">옵션 변경</th>
+                            </tr>
                     </thead>
                     <tbody>
                         {% for cart_item in cart_items %}
                         <tr>
-                            <td>
-                                <img src="{{ cart_item.product.head_image.url }}" class="img-thumbnail custom_image">
+                            <td class="text-center">
+                                <a href="{% url 'post_detail' cart_item.product.id %}">
+                                    <img src="{{ cart_item.product.head_image.url }}" class="img-thumbnail custom-image">
+                                </a>
                             </td>
                             <td>
-                                {{ cart_item.product.title }}
+                                <strong>{{ cart_item.product.title }}</strong><br>
+                                <span>상품 금액: {{ cart_item.product.price|intcomma }} 원</span><br>
+                                <span>상품 수량: {{ cart_item.quantity }} 개</span>
+                            </td>
+                            <td class="text-center">
+                                <strong>{{ cart_item.sub_total|intcomma }} 원</strong>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <a href="{% url 'cart:remove_cart' cart_item.product.id %}" class="btn btn-sm btn-outline-danger">-</a>
+                                    <span class="px-2">{{ cart_item.quantity }}</span>
+                                    <a href="{% url 'cart:add_cart' cart_item.product.id %}" class="btn btn-sm btn-outline-success">+</a>
+                                </div>
                                 <br>
-                                상품 금액: {{ cart_item.product.price|intcomma }}<br>
-                                상품 수량: {{ cart_item.quantity }} x {{ cart_item.product.price|intcomma }}
-                            </td>
-                            <td>
-                                {{ cart_item.sub_total|intcomma }}
-                            </td>
-                            <td>
-                                <br>
-                                <a href="{% url 'cart:remove_cart' cart_item.product.id %}" class="custom_icon">-</a>
-                                {{ cart_item.quantity }}
-                                <a href="{% url 'cart:add_cart' cart_item.product.id %}" class="custom_icon">+</a><br>
-                                <a href="{% url 'cart:delete_cart' cart_item.product.id %}" class="custom_icon">상품 삭제</a>
+                                <a href="{% url 'cart:delete_cart' cart_item.product.id %}" class="btn btn-sm btn-outline-secondary mt-2">상품 삭제</a>
                             </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <!-- Right Section: Checkout -->
-            <br>
-            <div class="col-md-4">
-<!--                <h3 class="text-center">결제</h3>-->
-<!--                <p class="text-center">Please review your shopping cart items before proceeding with the order payment.</p>-->
-<!--                <br>-->
-                <table class="table text-center">
-<!--                    <tr>-->
-<!--                        <td>Total Items:</td>-->
-<!--                        <td>{{ counter }}</td>-->
-<!--                    </tr>-->
-                    <tr>
-                        <td>배송비 무료</td>
-                    </tr>
-                    <tr>
-                        <td>총 금액: {{total|intcomma}}</td>
-                    </tr>
 
-                </table>
-                <br>
-                <a href="/" class="btn btn-secondary btn-block">계속 쇼핑하기</a>
-                <br>
-                <a href="/cart/checkout/" class="btn btn-secondary">구매하기</a>
+            <!-- Right Section: Checkout -->
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">주문 예상 금액</h4>
+                        <hr>
+                        <p>배송비: <strong>무료</strong></p>
+                        <p>총 금액: <strong>{{ total|intcomma }} 원</strong></p>
+                        <hr>
+                        <a href="/" class="btn btn-secondary btn-block mb-2">계속 쇼핑하기</a>
+                        <a href="/cart/checkout/" class="btn btn-primary btn-block">구매하기</a>
+                    </div>
+                </div>
             </div>
         </div>
-    {% endif %}
-<br>
-<hr>
-<br>
-    {% include 'blog/footer.html' %}
 
+    {% endif %}
 </div>
+
+{% if messages %}
+    <script>
+        {% for message in messages %}
+        alert("{{ message }}");  // 메시지를 alert로 표시
+        {% endfor %}
+    </script>
+{% endif %}
+
 {% endblock %}
 
 
 
+{% include 'blog/footer.html' %}
+
 <style>
-    .my_custom_table {
-        width: 100%;
-        font-size: 20px;
-        margin: auto; /* 중앙 정렬 */
+    /* 테이블 스타일 */
+    .table-bordered th, .table-bordered td {
+        vertical-align: middle; /* 텍스트 중앙 정렬 */
+        padding: 15px; /* 셀 안쪽 여백 */
     }
 
-    .my_custom_thread {
-        font-weight: bold;
-        text-transform: uppercase;
-        background-color: #f8f9fa;
+    /* 이미지 스타일 */
+    .custom-image {
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 8px; /* 둥근 모서리 */
+        margin: auto; /* 이미지 중앙 정렬 */
     }
 
-    .custom_image {
-        width: 200px;
-        height: 200px;
+    /* 카드 스타일 */
+    .card {
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
 
-    .custom_icon {
-        margin: 0 5px;
-        text-decoration: none;
-        color: #007bff;
-    }
-
-    .custom_icon:hover {
-        color: #0056b3;
-    }
-
-    .text-center {
-        text-align: center;
-    }
-
+    /* 버튼 스타일 */
     .btn-block {
         display: block;
         width: 100%;
     }
-</style>
+
+    .btn-group span {
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+    /* 폰트 및 간격 */
+    .text-center {
+        text-align: center;
+    }
+
+    h1, h2 {
+        font-weight: bold;
+    }
