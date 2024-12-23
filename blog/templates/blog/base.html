@@ -7,7 +7,11 @@
 
   <link rel="stylesheet" href="{% static 'blog/bootstrap/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'blog/css/blog-post.css' %}">
-</head>
+  <link rel="stylesheet" href="{% static 'blog/css/custom.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/css/fontawesome.min.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/webfonts' %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family-Roboto&display-swap">
+  <link rel="icon" href="{% static 'assets/favicon.png' %}" type="image/png"></head>
 
 <body>
 {% include 'blog/navbar.html'%}
@@ -20,37 +24,12 @@
         {% block main_area %}
         <!-- Default empty block to be overridden in child templates -->
         {% endblock %}
-      </div>
-
-      <!-- Sidebar Widgets Column -->
-      <div class="col-md-4">
-        <!-- Search Widget -->
-        <div class="card my-4">
-          <h5 class="card-header">Search</h5>
-          <div class="card-body">
-            <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search for...">
-              <span class="input-group-append">
-                <button class="btn btn-secondary" type="button">Go!</button>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-        </div>
+        {% block content %}
+        {% endblock %}
       </div>
     </div>
   </div>
 
-<ul class="pagination justify-content-center mb-4">
-  <li class="page-item">
-    <a class="page-link" href="#">&larr;</a>
-  </li>
-  <li class="page-item disabled">
-    <a class="page-link" href="#">&rarr;</a>
-  </li>
-</ul>
 
 {% include 'blog/footer.html' %}
 
