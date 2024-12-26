@@ -70,4 +70,3 @@ class PostDetail(DetailView):
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
         context['add_cart_url'] = reverse('cart:add_cart', args=[self.object.id])
         return context
-
