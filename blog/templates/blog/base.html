@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+
+<head>
+  <title>{% block head_title %}팜 CART{% endblock %}</title>
+
+  <link rel="stylesheet" href="{% static 'blog/bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/css/blog-post.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/css/custom.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/css/fontawesome.min.css' %}">
+  <link rel="stylesheet" href="{% static 'blog/webfonts' %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family-Roboto&display-swap">
+  <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.png' %}">
+</head>
+
+<body>
+{% include 'blog/navbar.html'%}
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <!-- Main Area -->
+      <div class="col-md-8">
+        {% block main_area %}
+        <!-- Default empty block to be overridden in child templates -->
+        {% endblock %}
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+
+
+{% include 'blog/footer.html' %}
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+</body>
+
+
+
+</html>
