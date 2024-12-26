@@ -1,0 +1,58 @@
+{% extends 'blog/base.html' %}
+{% load humanize %}
+
+{% block head_title %}
+<h5>{{ post.title }}</h5>
+{% endblock %}
+
+{% block main_area %}
+<br>
+<div class="container">
+    <br>
+    <div class="row">
+            <p><a href="/category/{{ post.category }}" class="badge badge-secondary float-right">{{ post.category }}</a></p>
+            <div style="min-width: 18rem">
+                <img class="card-img-top" src="{{ post.head_image.url }}" alt="{{ post.title }} head_image">
+            </div>
+        <div id="post-area">
+            <div>
+                <div>
+                    <h2 class="my_title">{{ post.title }}</h2>
+                    <h5>{{ post.price|intcomma }} 원</h5>
+                    <p>{{ post.content|linebreaks }}</p>
+                    {% if post.stock <= 0 %}
+                        <p><b>Out of Stock</b></p>
+                    {% else %}
+                        <a class="btn btn-secondary" href="{{ add_cart_url }}">Add to Cart</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+
+
+<!--파일 업로드 코드-->
+{% if post.file_upload %}
+    <a href="{{ post.file_upload.url }}" class="btn btn-outline-dark" role="button">
+        Download:
+
+<!--첨부파일 다운로드 버튼-->
+
+{% if post.get_file_ext == 'csv' %}
+<i class="fas fa-file-csv"></i>
+{% elif post.get_file_ext == 'xlsx' or post.get_file_ext == 'xls' %}
+<i class="fas fa-file-excel"></i>
+{% elif post.get_file_ext == 'docx' or post.get_file_ext == 'doc' %}
+<i class="fas fa-file-word"></i>
+{% else %}
+<i class="far fa-file"></i>
+{% endif %}
+{{ post.get_file_name }}
+</a>
+{% endif %}
+
+
+{% endblock %}
