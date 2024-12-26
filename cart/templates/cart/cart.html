@@ -17,20 +17,18 @@
                 <h2 class="text-center mb-4">장바구니</h2>
                 <table class="table table-bordered align-middle">
                     <thead class="table-light">
-                            <tr>
-                                <th style="width: 20%;">상품</th>
-                                <th style="width: 40%;">세부 내역</th>
-                                <th style="width: 20%;">총 가격</th>
-                                <th style="width: 20%;">옵션 변경</th>
-                            </tr>
+                        <tr>
+                            <th style="width: 20%;">상품</th>
+                            <th style="width: 40%;">세부 내역</th>
+                            <th style="width: 20%;">총 가격</th>
+                            <th style="width: 20%;">옵션 변경</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {% for cart_item in cart_items %}
                         <tr>
                             <td class="text-center">
-                                <a href="{% url 'post_detail' cart_item.product.id %}">
-                                    <img src="{{ cart_item.product.head_image.url }}" class="img-thumbnail custom-image">
-                                </a>
+                                <img src="{{ cart_item.product.head_image.url }}" class="img-thumbnail custom-image">
                             </td>
                             <td>
                                 <strong>{{ cart_item.product.title }}</strong><br>
@@ -59,7 +57,7 @@
             <div class="col-md-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h4 class="card-title text-center">주문 예상 금액</h4>
+                        <h4 class="card-title text-center">주문 요약</h4>
                         <hr>
                         <p>배송비: <strong>무료</strong></p>
                         <p>총 금액: <strong>{{ total|intcomma }} 원</strong></p>
@@ -70,9 +68,11 @@
                 </div>
             </div>
         </div>
-
     {% endif %}
 </div>
+{% endblock %}
+
+{% include 'blog/footer.html' %}
 
 {% if messages %}
     <script>
@@ -81,12 +81,7 @@
         {% endfor %}
     </script>
 {% endif %}
-
-{% endblock %}
-
-
-
-{% include 'blog/footer.html' %}
+    
 
 <style>
     /* 테이블 스타일 */
