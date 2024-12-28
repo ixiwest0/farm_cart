@@ -9,7 +9,7 @@ from cart.models import Cart, CartItem
 from cart.views import _cart_id
 
 KAKAO_PAY_URL = "https://kapi.kakao.com/v1/payment/ready"
-KAKAO_ADMIN_KEY = "4b7b21199b6e64703413e9faef41ffbe"  # 카카오 개발자 콘솔에서 발급된 Admin Key
+KAKAO_ADMIN_KEY = ""  # 카카오 개발자 콘솔에서 발급된 Admin Key
 
 
 @csrf_exempt
